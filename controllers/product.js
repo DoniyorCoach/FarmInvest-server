@@ -27,11 +27,6 @@ const getAllProducts = async (req, res) => {
 
 const getUserProducts = async (req, res) => {
   try {
-    const cachedProducts = cache.get('userProducts');
-    if (cachedProducts) {
-      return res.json({ status: 200, message: cachedProducts });
-    }
-
     const userProducts = [];
 
     // fetch
@@ -69,7 +64,6 @@ const getUserProducts = async (req, res) => {
       }
     }
 
-    cache.put('userProducts', userProducts, 3000); // 3 секунды
     res.json({ status: 200, message: userProducts });
   } catch (error) {
     req.logger.error(error);
